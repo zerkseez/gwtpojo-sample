@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mycompany</groupId>
+        <artifactId>mycompany-parent</artifactId>
+        <version>1.0.0-ALPHA</version>
+        <relativePath>../</relativePath>
+    </parent>
+    <artifactId>mycompany-client</artifactId>
+    <packaging>war</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.zerkseez</groupId>
+                <artifactId>gwtpojo-maven-plugin</artifactId>
+                <dependencies>
+                    <!-- Add mycompany-model as a dependency for gwtpojo-maven-plugin -->
+                    <dependency>
+                        <groupId>com.mycompany</groupId>
+                        <artifactId>mycompany-model</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.version}</version>
+                <configuration>
+                    <runTarget>MyClientApplication.html</runTarget>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test</goal>
+                            <goal>generateAsync</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Add mycompany-model as a dependency the client as well -->
+        <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>mycompany-model</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- If the source code for mycompany-model is in a separate jar, include it as well -->
+        <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>mycompany-model</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <!-- gwtpojo-core is also needed -->
+        <dependency>
+            <groupId>com.github.zerkseez</groupId>
+            <artifactId>gwtpojo-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
